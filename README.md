@@ -1,2 +1,2 @@
 # My Blog
-[kacxxia.wtf](kacxxia.wtf)
+[https://kacxxia.wtf](kacxxia.wtf)
