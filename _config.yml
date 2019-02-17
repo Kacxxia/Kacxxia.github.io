@@ -1,0 +1,13 @@
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      title: "Ka WTF"
+exclude:
+  - 'package.json'
+  - 'README.md'
+  - 'webpack.config.js'
+  - 'package-lock.json'
+keep_files:
+  - 'assets/srcJS'
