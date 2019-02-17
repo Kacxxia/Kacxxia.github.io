@@ -11,8 +11,7 @@ import PaintingManifest from '../img/Paintings/manifest.json'
   const name = names[selectedIndex]
   const img = PaintingManifest[name]
   const bkg = new Image()
-  console.log(`assets/img/Paintings/${name}${img.ext}`)
-  bkg.src = `assets/img/Paintings/祭-Pixiv-藤原.jpg`
+  bkg.src = `assets/img/Paintings/${name}${img.ext}`
   
   const body = document.getElementsByTagName('body')[0]
   body.appendChild(bkg)
