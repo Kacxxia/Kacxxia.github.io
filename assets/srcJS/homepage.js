@@ -6,6 +6,7 @@
 import PaintingManifest from '../img/Paintings/manifest.json'
 
 (function run(){
+  alert(1)
   const names = Object.keys(PaintingManifest)
   const selectedIndex = Math.floor(Math.random() * names.length)
   const name = names[selectedIndex]

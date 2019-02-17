@@ -9,5 +9,6 @@ exclude:
   - 'README.md'
   - 'webpack.config.js'
   - 'package-lock.json'
+  - 'node_modules/'
 keep_files:
   - 'assets/srcJS'

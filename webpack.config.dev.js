@@ -4,7 +4,7 @@ module.exports = {
   mode: "development",
   entry: ["./assets/srcJS/homepage.js"],
   output: {
-    path: path.resolve(__dirname, "assets", "js"),
+    path: path.resolve(__dirname, "_site", "assets", "js"),
     filename: "homepage.js",
     library: "AutoBtnColor",
     libraryTarget: "umd",
@@ -20,5 +20,12 @@ module.exports = {
         }
       }
     ]
+  },
+  devServer: {
+    contentBase: "_site/",
+    publicPath: "/assets/js",
+    watchContentBase: true,
+    open: true,
+    port: 4000
   }
 }
