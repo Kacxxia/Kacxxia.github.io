@@ -1,4 +1,9 @@
-import P from './worker'
+class A {
+  constructor() {
+    this.a = 5
+    this.b = this.a
+  }
+}
 
-console.log('start')
-console.log(P)
+const t = new A()
+console.log(t)
