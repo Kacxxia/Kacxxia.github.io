@@ -8,7 +8,7 @@
     "dev": "run-p dev:*",
     "dev:mobile": "run-p dev:webpack:mobile dev:jekyll",
     "dev:webpack": "webpack-dev-server --config ./webpack.config.dev.js",
-    "dev:webpack:mobile": "webpack-dev-server --config ./webpack.config.dev.js --host 172.20.10.5",
+    "dev:webpack:mobile": "webpack-dev-server --config ./webpack.config.dev.js --host 172.20.10.3",
     "dev:jekyll": "jekyll build --watch",
     "build": "run-s build:*",
     "build:webpack": "webpack --config ./webpack.config.prod.js",
@@ -33,6 +33,7 @@
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
     "babel-loader": "^8.0.5",
+    "lodash": "^4.17.11",
     "webpack": "^4.29.4"
   },
   "devDependencies": {
