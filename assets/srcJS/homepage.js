@@ -62,11 +62,15 @@ class Painter {
       this.vw = this.vw / 1.001  
       this.vh = this.vh / 1.001
     }
-    console.log(this.vw / this.vh, this.width / this.height)
 
     const MINIUM_CAMERA_AVAILABLE_MOVING_SPACE = 200
-    this.vw -= MINIUM_CAMERA_AVAILABLE_MOVING_SPACE
-    this.vh = this.vw * this.height / this.width
+    if (this.img.width < this.img.height) {
+      this.vw -= MINIUM_CAMERA_AVAILABLE_MOVING_SPACE
+      this.vh = this.vw * this.height / this.width
+    } else {
+      this.vh -= MINIUM_CAMERA_AVAILABLE_MOVING_SPACE
+      this.vw = this.vh * this.width / this.height
+    }
 
     // put the viewport to the center
     this.startX = (this.img.width - this.vw) / 2
@@ -75,12 +79,12 @@ class Painter {
     // pick the interesting part of the image manually
 
     // this.img.height * 0.5 - this.img.height * (1-0.618)
-    if (this.img.height > this.img.width) this.startY -= Math.min(this.startY, this.img.height * 0.118)
+    if (this.img.height >= this.img.width) this.startY -= Math.min(this.startY, this.img.height * 0.118)
     if (this.img.height < this.img.width) {
       // pick the bottom-right part
       // this.img.width * 0.618 - this.img.width * 0.5
-      this.startY += Math.min(this.height - this.startY - this.vh, this.img.height * 0.118)
-      this.startX += Math.min(this.width - this.startX - this.vw, this.img.width * 0.118)
+      this.startY += Math.min(this.img.height - this.startY - this.vh, this.img.height * 0.118)
+      this.startX += Math.min(this.img.width - this.startX - this.vw, this.img.width * 0.118)
     }
   }
 
@@ -178,7 +182,7 @@ class Camera {
         this.betaCount = 0
       }
 
-      if (this.gammaCount >= 30 || this.betaCount >= 30) {
+      if (this.gammaCount >= 48 || this.betaCount >= 48) {
         this.ticking = true
         this.gammaCount = 0
         this.betaCount = 0
