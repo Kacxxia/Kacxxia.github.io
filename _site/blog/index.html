@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8">
+<title>Ka WTF</title>
+<link rel="stylesheet" href="/assets/css/normalize.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+<body>
+  <nav id="nav-bar">
+  <a class ="no-decoration" id="nav-home" href="/index.html">Ka WTF</a>
+  <img id="avatar" src="/assets/img/avatar.png" alt="avatar">
+</nav>
+<header>
+  <div class="container">
+    <h1>Ka WTF</h1>
+    <p>为了能遇见更厉害的人</p>
+  </div>
+</header>
+
+<main class="container">
+  <section class="posts">
+    <ul>
+      
+        <li>
+          <h2><a class="no-decoration" href="/2019/02/17/randomPicture.html">历程：第一个需求：从零开始实现网站主页刷新随机图片</a></h2>
+          
+            <h4 class="subtitle">在基本开发中学习更深层次的原理</h4>
+          
+          <p>
+概览
+从网站的第一个需求：”实现主页背景随机图片”出发，经历了
+
+  读写图片，探究文件I/O并行处理和串行处理的效率不同
+  在I/O时打印图片处理过程，学习Event Loop
+  在主页JS中引用图片，学习打包原理和浏览器中的模块发展历程
+  搭建舒服的开发环境，配置Webpack-dev-server和jekyll协作的开发环境
+  在push之前进行预处理，构造Git Hooks
+    需求总览
+  
+  实现：在git commit之前，将电脑上另一文件夹中的所有图片，转换成yml形式存储在博客的_data中。在处理时要动态在控制台中显示处理进度。
+  用ES实现随机图片...</p>
+        </li>
+      
+    </ul>
+    <div class="pagination">
+      
+        <span class="pagination-btn unavailable previous">上一页</span>
+      
+
+      
+        <span class="pagination-btn unavailable next">下一页</span>
+      
+    </div>
+  </section>
+  <aside>
+    <h3>标签</h3>
+    <div class="tags">
+        
+          <div class="tag">
+            <span class="name">Event Loop</span>
+            <div class="count">(1)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">Git Hooks</span>
+            <div class="count">(1)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">I/O</span>
+            <div class="count">(1)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">Webpack</span>
+            <div class="count">(1)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">Browser</span>
+            <div class="count">(1)</div>
+          </div>
+        
+    </div>
+  </aside>
+</main>
+  <footer>
+  <span>
+    Copyright © Kacxxia Blog 2018
+  </span>
+</footer>
+</body>
+</html>

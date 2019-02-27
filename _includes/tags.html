@@ -1,0 +1,9 @@
+<!-- ---
+---
+{% assign tags = ''}
+{% for post in site.posts %}
+  {% for tag in post.tags %}
+    {% if tags == '' %}
+      {% assign tags = tag | split ',' %}
+    {% endif %}
+     -->

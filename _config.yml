@@ -12,3 +12,7 @@ exclude:
   - 'node_modules/'
 keep_files:
   - 'assets/srcJS'
+plugins: [jekyll-paginate]
+
+paginate: 7
+paginate_path: "blog/page:num/"

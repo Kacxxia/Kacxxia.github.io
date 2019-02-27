@@ -156,7 +156,7 @@ class Camera {
   
       let newX = this.painter.startX - tanDegree(gamma - this.anchorGamma) * this.step
       let newY = this.painter.startY - tanDegree(beta - this.anchorBeta) * this.step
-      if (Math.abs(newX - this.lastX) < 2 && Math.abs(newY - this.lastY) < 2) return;
+      if (Math.abs(newX - this.lastX) < 3 && Math.abs(newY - this.lastY) < 3) return;
 
       if (newX < 0) newX = 0;
       if (newX + this.painter.vw > this.painter.img.width) newX = this.painter.img.width - this.painter.vw;
