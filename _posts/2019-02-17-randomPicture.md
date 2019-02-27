@@ -1,5 +1,15 @@
-# 历程：第一个需求：从零开始实现网站主页刷新随机图片
-**关键词**: `Event Loop` | `Git Hooks` | `文件I/O线程池效率` | `打包原理` | `浏览器中的模块机制` | `Webpack-dev-server和jekyll协作的开发环境`
+---
+layout: post
+title: 历程：第一个需求：从零开始实现网站主页刷新随机图片
+subtitle: 在基本开发中学习更深层次的原理
+tags:
+  - Event Loop
+  - Git Hooks
+  - I/O
+  - Webpack
+  - Browser
+---
+<!-- **关键词**: `Event Loop` | `Git Hooks` | `文件I/O线程池效率` | `打包原理` | `浏览器中的模块机制` | `Webpack-dev-server和jekyll协作的开发环境` -->
 ## 概览
 从网站的第一个需求：”实现主页背景随机图片”出发，经历了
 1.  读写图片，探究`文件I/O并行处理和串行处理的效率不同`

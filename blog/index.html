@@ -1,0 +1,50 @@
+---
+layout: default
+---
+{% include navbar.html %}
+<header>
+  <div class="container">
+    <h1>Ka WTF</h1>
+    <p>为了能遇见更厉害的人</p>
+  </div>
+</header>
+
+<main class="container">
+  <section class="posts">
+    <ul>
+      {% for post in paginator.posts %}
+        <li>
+          <h2><a class="no-decoration" href="{{ post.url }}">{{ post.title }}</a></h2>
+          {% if post.subtitle %}
+            <h4 class="subtitle">{{ post.subtitle }}</h4>
+          {% endif %}
+          <p>{{ post.excerpt | strip_html | truncate: 300 }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="pagination">
+      {% if paginator.previous_page %}
+        <a class="pagination-btn previous no-decoration" href="{{ paginator.previous_page_path }}">上一页</a>
+      {% else %}
+        <span class="pagination-btn unavailable previous">上一页</span>
+      {% endif %}
+
+      {% if paginator.next_page %}
+        <a class="pagination-btn next no-decoration" href="{{ paginator.next_page_path }}">下一页</a>
+      {% else %}
+        <span class="pagination-btn unavailable next">下一页</span>
+      {% endif %}
+    </div>
+  </section>
+  <aside>
+    <h3>标签</h3>
+    <div class="tags">
+        {% for tag in site.tags %}
+          <div class="tag">
+            <span class="name">{{ tag[0] }}</span>
+            <div class="count">({{ tag[1].size }})</div>
+          </div>
+        {% endfor %}
+    </div>
+  </aside>
+</main>
