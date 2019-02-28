@@ -247,6 +247,7 @@ function navigate(ev) {
     if (ev.key.length === 2 && ev.key[0] === 'F') return;
     if (ev.ctrlKey || ev.altKey || ev.shiftKey) return;
   }
+  painter.canvas.classList.add('hide')
   window.removeEventListener("orientationchange", painter.build)
   window.removeEventListener("deviceorientation", deviceOrientationHandler)
   window.removeEventListener("click", navigate)

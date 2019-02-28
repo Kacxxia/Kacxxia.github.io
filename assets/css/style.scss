@@ -76,7 +76,7 @@ canvas {
       bottom: 15%;
       transform: translate(-50%);
 
-      font-size: 1.5rem;
+      font-size: 2rem;
       letter-spacing: 0.25em;
       text-shadow: 0 0 60px rgb(250, 250, 169), 0 0 30px rgb(206, 206, 106), 0 0 6px rgb(148, 148, 81);
       color: rgb(250, 250, 169);
@@ -101,8 +101,20 @@ canvas {
   color: black;
 
   #nav-home {
-    color: rgb(100, 83, 83);
+    color: rgb(71, 62, 62);
     font-size: 1.5rem;
+  }
+
+  #nav-blog {
+    margin-left: auto;
+    margin-right: 2.5rem;
+    color: white;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+  }
+
+  #nav-blog.inverse {
+    color: black;
   }
 
   #avatar {
@@ -210,6 +222,9 @@ main.container {
       flex-wrap: wrap;
 
       .tag {
+        &:hover {
+          border: 1px solid rgb(137, 175, 201);
+        }
         margin-top: 0.25rem;
         margin-left: 0.25rem;
         padding: 0.25rem;
@@ -261,6 +276,9 @@ main.container {
         margin: 0;
       }
     }
+    p {
+      word-break: break-all;
+    }
 
     a {
       color: black;
@@ -304,6 +322,14 @@ main.container {
   }
 }
 
+.container.notfound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  padding-top: 8rem;
+  flex-grow: 1;
+}
 
 // ------------------------------
 // footer
