@@ -15,6 +15,10 @@
   <a class ="no-decoration" id="nav-home" href="/index.html">Ka WTF</a>
   <img id="avatar" src="/assets/img/avatar.png" alt="avatar">
 </nav>
+  <nav id="nav-bar">
+  <a class ="no-decoration" id="nav-home" href="/index.html">Ka WTF</a>
+  <img id="avatar" src="/assets/img/avatar.png" alt="avatar">
+</nav>
 <header>
   <div class="container">
     <h1>Ka WTF</h1>
@@ -22,28 +26,42 @@
   </div>
 </header>
 
-<main class="container">
+<main class="container" id="blog-main">
   <section class="posts">
     <ul>
       
         <li>
-          <h2><a class="no-decoration" href="/2019/02/17/randomPicture.html">历程：第一个需求：从零开始实现网站主页刷新随机图片</a></h2>
-          
-            <h4 class="subtitle">在基本开发中学习更深层次的原理</h4>
-          
-          <p>
-概览
-从网站的第一个需求：”实现主页背景随机图片”出发，经历了
+          <a class="no-decoration" href="/2019/02/16/ioEffiency.html">
+            <h2>测试Node串行I/O和并行I/O的效率</h2>
+            
+              <h4 class="subtitle">有线程池并行I/O效率就高吗？</h4>
+            
+            <p>向Libuv一个接着一个发起文件I/O请求的效率相比同时发起多个I/O请求的效率如何？从直观的角度来看并行的效率是大于串行的，但实际情况确实是这样吗
 
-  读写图片，探究文件I/O并行处理和串行处理的效率不同
-  在I/O时打印图片处理过程，学习Event Loop
-  在主页JS中引用图片，学习打包原理和浏览器中的模块发展历程
-  搭建舒服的开发环境，配置Webpack-dev-server和jekyll协作的开发环境
-  在push之前进行预处理，构造Git Hooks
-    需求总览
-  
-  实现：在git commit之前，将电脑上另一文件夹中的所有图片，转换成yml形式存储在博客的_data中。在处理时要动态在控制台中显示处理进度。
-  用ES实现随机图片...</p>
+</p>
+          </a>
+        </li>
+      
+        <li>
+          <a class="no-decoration" href="/2018/09/18/EventLoop.html">
+            <h2>Event Loop</h2>
+            
+              <h4 class="subtitle">Node.js的异步机制</h4>
+            
+            <p>做在控制台输出文件处理进度的时候，想了解Node背后的异步机制
+
+</p>
+          </a>
+        </li>
+      
+        <li>
+          <a class="no-decoration" href="/2018/05/14/Modules.html">
+            <h2>JS的模块发展历程与Webpack打包过程</h2>
+            
+            <p>了解Javascript中模块的曲折发展，并学习现代化的模块机制实现
+
+</p>
+          </a>
         </li>
       
     </ul>
@@ -62,17 +80,12 @@
     <div class="tags">
         
           <div class="tag">
-            <span class="name">Event Loop</span>
+            <span class="name">模块机制</span>
             <div class="count">(1)</div>
           </div>
         
           <div class="tag">
-            <span class="name">Git Hooks</span>
-            <div class="count">(1)</div>
-          </div>
-        
-          <div class="tag">
-            <span class="name">I/O</span>
+            <span class="name">浏览器</span>
             <div class="count">(1)</div>
           </div>
         
@@ -82,7 +95,17 @@
           </div>
         
           <div class="tag">
-            <span class="name">Browser</span>
+            <span class="name">Event Loop</span>
+            <div class="count">(1)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">Node.js</span>
+            <div class="count">(2)</div>
+          </div>
+        
+          <div class="tag">
+            <span class="name">I/O</span>
             <div class="count">(1)</div>
           </div>
         
