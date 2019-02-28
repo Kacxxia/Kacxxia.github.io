@@ -18,8 +18,7 @@ function getRandomImg() {
 }
 
 class Painter {
-  constructor(containerElement, imgElement) {
-    const imgLoader = new ResourceLoadManager(imgElement)
+  constructor(containerElement, imgElement, imgLoader) {
     const canvas = document.createElement("canvas")
     containerElement.appendChild(canvas)
     this.img = imgElement
@@ -33,7 +32,7 @@ class Painter {
 
   setCamera() {
     this.camera = new Camera(this)
-    window.addEventListener("deviceorientation", Throttle((e) => this.camera.rotate(e.beta, e.gamma), 1000 / 60))
+    window.addEventListener("deviceorientation", deviceOrientationHandler)
   }
 
   reset() {
@@ -224,11 +223,35 @@ class Camera {
 }
 
 
+
+const body = document.getElementById('home-root')
+
 const randomImg = getRandomImg()
 const bkgImg = new Image()
 bkgImg.src = randomImg.url
-const body = document.getElementById('home-root')
-const painter = new Painter(body, bkgImg)
+const imgLoader = new ResourceLoadManager(bkgImg)
+
+const painter = new Painter(body, bkgImg, imgLoader)
+const deviceOrientationHandler = Throttle(function (e) { this.camera.rotate(e.beta, e.gamma) }.bind(painter), 1000 / 60)
 painter.build()
+
+
 window.addEventListener("orientationchange", painter.build)
+
+function navigate(ev) {
+  if (ev.type === "keydown") {
+    // except for the function key (F1, F2...)
+    if (ev.key.length === 2 && ev.key[0] === 'F') return;
+  }
+  window.removeEventListener("orientationchange", painter.build)
+  window.removeEventListener("deviceorientation", deviceOrientationHandler)
+  window.removeEventListener("click", navigate)
+  window.removeEventListener("touchstart", navigate)
+  window.removeEventListener("keydown", navigate)
+  window.location.pathname = "/blog"
+}
+
+document.addEventListener("click", navigate)
+document.addEventListener("touchstart", navigate)
+document.addEventListener("keydown", navigate)
 

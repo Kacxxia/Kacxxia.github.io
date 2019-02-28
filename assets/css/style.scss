@@ -5,6 +5,20 @@ a.no-decoration {
   text-decoration: none;
 }
 
+@keyframes beat-color {
+  0% {
+    text-shadow: 0 0 60px rgb(253, 253, 203), 0 0 30px rgb(206, 206, 118), 0 0 6px rgb(177, 177, 75);
+    color: rgb(253, 253, 203);
+  }
+  50% {
+    text-shadow: 0 0 60px rgb(170, 170, 78), 0 0 30px rgb(143, 143, 42), 0 0 6px rgb(119, 119, 22);
+    color: rgb(202, 202, 120);
+  }
+  100% {
+    text-shadow: 0 0 60px rgb(0, 0, 0), 0 0 30px rgb(26, 26, 4), 0 0 6px rgb(46, 46, 25);
+    color: black;
+  }
+}
 
 // ----------------
 // Home
@@ -27,28 +41,33 @@ html, body {
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -70%);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     color: white;
 
     h1 {
+      font-size: 4rem;
       padding: 0.5rem 1rem;
       background-color: #48a9c5;  
       opacity: 0.9;
+      transform: translate(0, -100%);
     }
 
-    #blog-nav-btn {
-      display: block;
-      padding: 0.5rem 1rem;
-      font-size: 2rem;
-      background-color: #48a9c5;
-      opacity: 0.9;
-      color: white;
+    .hint {
+      position: absolute;
+      left: 50%;
+      bottom: 15%;
+      transform: translate(-50%);
+
+      font-size: 1.5rem;
+      letter-spacing: 0.25em;
+      text-shadow: 0 0 60px rgb(250, 250, 169), 0 0 30px rgb(206, 206, 106), 0 0 6px rgb(148, 148, 81);
+      color: rgb(250, 250, 169);
+      animation: beat-color linear 1.5s infinite alternate;
     }
   }
-
-
 }
 
 // ---------------------------
