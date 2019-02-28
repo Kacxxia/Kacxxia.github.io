@@ -256,7 +256,7 @@ function navigate(ev) {
   window.location.pathname = "/blog"
 }
 imgLoader.subscribe(() => {
-  hint.classList.remove('hide')
+  hint.textContent = "Press any button"
   document.addEventListener("click", navigate)
   document.addEventListener("touchstart", navigate)
   document.addEventListener("keydown", navigate)
