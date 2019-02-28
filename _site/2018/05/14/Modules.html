@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8">
+<title>JS的模块发展历程与Webpack打包过程</title>
+<link rel="stylesheet" href="/assets/css/normalize.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+<body>
+  <nav id="nav-bar">
+  <a class ="no-decoration" id="nav-home" href="/index.html">Ka WTF</a>
+  <img id="avatar" src="/assets/img/avatar.png" alt="avatar">
+</nav>
+  <main class="container" id="post-main">
+  <header>
+    <h1>JS的模块发展历程与Webpack打包过程</h1>
+    <p>14 May 2018</p>
+  </header>
+  <article>
+      <h2 id="了解javascript中模块的曲折发展并学习现代化的模块机制实现"><em>了解Javascript中模块的曲折发展，并学习现代化的模块机制实现</em></h2>
+
+<p>参考文献<br />
+<a href="https://huangxuan.me/js-module-7day/#/1">JS模块七日谈</a></p>
+
+<hr />
+
+<h3 id="js模块发展历程">JS模块发展历程</h3>
+
+<p>最早期：<br />
+<em>封装</em></p>
+<ul>
+  <li>全局变量。污染变量名</li>
+  <li>命名空间。是对象，可访问私有属性</li>
+  <li>闭包。</li>
+  <li>闭包+可注入依赖。</li>
+</ul>
+
+<p><em>加载</em></p>
+<ul>
+  <li>script标签直接引用。依赖关系模糊，难维护，请求多。某些浏览器中脚本可能不是并行加载，阻塞了其他资源</li>
+  <li>LABjs。保证脚本是并行加载，并尽快执行，有需要可以按照依赖关系提供串行执行。</li>
+</ul>
+
+<p>早期，模块化架构：</p>
+<ul>
+  <li>YUI3。采用沙箱模式实现模块的定义和使用。</li>
+</ul>
+
+<p>中期：</p>
+<ul>
+  <li>CommonJS，MODULES/1.0。服务器端的模块机制。后续发展成了三个分支。1. 继续发展，在浏览器端则进行转换。2. 坚持浏览器的特性。3. 尊重浏览器的特性并尽量遵从1.0规范</li>
+  <li>1.MODULES/Transport规范，如今的Babel实现</li>
+  <li>2.AMD规范，requireJS实现</li>
+  <li>3.MODULES/Wrapping规范，FlyScript实现。CMD规范，SeaJS实现。</li>
+</ul>
+
+<p>后期：</p>
+<ul>
+  <li>分支一迅速发展。出现Browserify对代码进行转换和对JS依赖进行打包。</li>
+  <li>继续出现Webpack。可以打包非JS资源，并用对应的loader进行处理。支持代码分割(chunk)进行按需加载。提供Plugin增加功能。也提供了像dev-server这样的开发工具。</li>
+</ul>
+
+<p>未来：</p>
+<ul>
+  <li>浏览器普遍实现import/export语法进行模块加载。</li>
+</ul>
+
+<hr />
+
+<h3 id="打包基本过程">打包基本过程</h3>
+<p><a href="https://www.youtube.com/watch?v=UNMkLHzofQI">性感Webpack作者Tobias Koppers在线打包</a></p>
+<ol>
+  <li>按照入口文件的模块依赖，生成模块依赖图。包括模块自身的类型（ES，CommonJS)，模块依赖，模块依赖加载方式（同步/异步）</li>
+  <li>根据模块依赖图，对模块进行分组生成chunk图，至少有main chunk和async chunk group（如果有异步加载）。async group包含多个async chunk。</li>
+  <li>优化chunk图。因为main是async group的parent。所以async group可以继续使用main中已经加载好的模块。</li>
+  <li>连接module。连接根和子两个依赖必须满足要求：  1. 根为ES Module。2. 子也为ESM；不是异步import引用；在同一个chunk;子的所有引用者也要在同一个chunk；</li>
+  <li>给新的模块图中的所有模块赋予ID。给chunk赋予ID</li>
+  <li>生成代码。1. commonjs. 在全局/运行时添加一个magic_function, 用途是根据模块ID加载模块；把所有ESM原本的import/export替换成magic_function，参数是所需模块的ID，然后在文件外层包裹一层函数，传入magic_function用于引用和module用于暴露自身（保存在全局/运行时）。对于被连接的模块，它们与连接的模块算处于同一个模块中，因此没有自己的模块ID，引用它时直接拼接文件。2. 异步加载。将异步加载语法转换为magic_function.loadChunk函数。loadChunk函数添加script tag，根据传入的chunkID引用对应的异步chunk。异步chunk则是结合jsonp在全局/运行时添加自身模块。</li>
+</ol>
+
+  </article>
+</main>
+  <footer>
+  <span>
+    Copyright © Kacxxia Blog 2018
+  </span>
+</footer>
+</body>
+</html>

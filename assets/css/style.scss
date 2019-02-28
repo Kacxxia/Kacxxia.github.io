@@ -10,6 +10,7 @@ a.no-decoration {
 // Home
 html, body {
   height: 100%;
+  line-height: 1.7;
 }
 
 #home-root {
@@ -98,7 +99,7 @@ header {
 
 @media (min-width: 768px) {
   main.container {
-    max-width: 992px;
+    max-width: 768px;
 
     aside {
       margin-left: 6rem;
@@ -107,11 +108,15 @@ header {
 }
 
 main.container {
-  display: flex;
-  flex-wrap: wrap-reverse;
   margin: 2rem auto 0;
   padding: 0 1rem;
 
+  &#blog-main {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    max-width: 992px;
+  }
+  
   section {
     width: 600px;
     flex-grow: 2;
@@ -121,19 +126,23 @@ main.container {
       padding: 0;
 
       li {
-        border-bottom: 1px solid rgb(145, 145, 145);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 0.5px 1px 0.01px rgba(0, 0, 0, 0.5);
         
         h2 {
           margin-bottom: 0.5rem;
-          a {
-            color: black;
-            
-          }
+          color: black;
         }
+
 
         .subtitle {
           margin: 0;
           color: rgb(66, 61, 61);
+        }
+
+        p {
+          color: rgb(139, 134, 134);
         }
       }
     }
@@ -183,6 +192,81 @@ main.container {
         }
       }
     }
+  }
+
+  &#post-main {
+    margin-top: 6rem;
+  }
+
+  article {
+    hr {
+      border-width: 0;
+      margin: 2rem 0;
+      font-size: 1.5rem;
+      letter-spacing: 1em;
+      line-height: 1.4;
+      overflow: visible;
+      text-align: center;
+      height: 0;
+
+      &::before {
+        content: '...';
+        display: block;
+        position: relative;
+        top: -1rem;
+        color: rgba(0, 0, 0, 0.66);
+      }
+    }
+    blockquote {
+      margin-left: -1rem;
+      padding: 0 1rem;
+      border-left: 4px solid;
+
+      p {
+        white-space: pre-wrap;
+        margin: 0;
+      }
+    }
+
+    a {
+      color: black;
+
+    }
+
+    ul, ol {
+      padding: 0;
+
+      li {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+
+    pre.highlight {
+      background-color: rgba(0, 0, 0, 0.05);
+      padding: 1rem;
+      white-space: pre-wrap;
+    }
+
+    code.highlighter-rouge {
+      margin: 0 0.25rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 90%;
+      color: #c7254e;
+      background-color: #f9f2f4;
+      border-radius: 4px;
+    }
+  }
+}
+
+.table-bordered {
+  border: solid 1px;
+  border-collapse: collapse;
+
+  td, th {
+    padding: 0.5rem;
+    border: solid 1px;
   }
 }
 

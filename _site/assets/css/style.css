@@ -2,7 +2,8 @@ a.no-decoration {
   text-decoration: none; }
 
 html, body {
-  height: 100%; }
+  height: 100%;
+  line-height: 1.7; }
 
 #home-root {
   overflow: hidden;
@@ -67,14 +68,16 @@ header .container {
 
 @media (min-width: 768px) {
   main.container {
-    max-width: 992px; }
+    max-width: 768px; }
     main.container aside {
       margin-left: 6rem; } }
 main.container {
-  display: flex;
-  flex-wrap: wrap-reverse;
   margin: 2rem auto 0;
   padding: 0 1rem; }
+  main.container#blog-main {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    max-width: 992px; }
   main.container section {
     width: 600px;
     flex-grow: 2; }
@@ -82,14 +85,17 @@ main.container {
       list-style: none;
       padding: 0; }
       main.container section ul li {
-        border-bottom: 1px solid #919191; }
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 0.5px 1px 0.01px rgba(0, 0, 0, 0.5); }
         main.container section ul li h2 {
-          margin-bottom: 0.5rem; }
-          main.container section ul li h2 a {
-            color: black; }
+          margin-bottom: 0.5rem;
+          color: black; }
         main.container section ul li .subtitle {
           margin: 0;
           color: #423d3d; }
+        main.container section ul li p {
+          color: #8b8686; }
     main.container section .pagination {
       display: flex;
       justify-content: space-between;
@@ -122,6 +128,55 @@ main.container {
           border-radius: 50%;
           padding: 0.1rem;
           margin-left: 1rem; }
+  main.container#post-main {
+    margin-top: 6rem; }
+  main.container article hr {
+    border-width: 0;
+    margin: 2rem 0;
+    font-size: 1.5rem;
+    letter-spacing: 1em;
+    line-height: 1.4;
+    overflow: visible;
+    text-align: center;
+    height: 0; }
+    main.container article hr::before {
+      content: '...';
+      display: block;
+      position: relative;
+      top: -1rem;
+      color: rgba(0, 0, 0, 0.66); }
+  main.container article blockquote {
+    margin-left: -1rem;
+    padding: 0 1rem;
+    border-left: 4px solid; }
+    main.container article blockquote p {
+      white-space: pre-wrap;
+      margin: 0; }
+  main.container article a {
+    color: black; }
+  main.container article ul, main.container article ol {
+    padding: 0; }
+    main.container article ul li, main.container article ol li {
+      margin-left: 2rem;
+      margin-bottom: 1rem; }
+  main.container article pre.highlight {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    white-space: pre-wrap; }
+  main.container article code.highlighter-rouge {
+    margin: 0 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px; }
+
+.table-bordered {
+  border: solid 1px;
+  border-collapse: collapse; }
+  .table-bordered td, .table-bordered th {
+    padding: 0.5rem;
+    border: solid 1px; }
 
 footer {
   display: flex;
