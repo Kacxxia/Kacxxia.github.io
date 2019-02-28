@@ -5,11 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {% include defaultHeader.html %}
-
 </head>
+{% comment %}
+  for includer like /blog/blog.html, we need to refer to layout object,
+  but for includer like /404.html, we need to refer to page object
+{% endcomment %}
+
+{% assign isBlogNavInverse=layout.inverse_blog_nav %}
+{% if isBlogNavInverse!=true %}
+  {% assign isBlogNavInverse=page.inverse_blog_nav %}
+{% endif %}
 <body>
-  {% include navbar.html %}
   {{content}}
+  {% include navbar.html inverse_blog_nav=isBlogNavInverse %}
   {% include footer.html %}
 </body>
 </html>

@@ -53,7 +53,7 @@ canvas {
       left: 50%;
       bottom: 15%;
       transform: translate(-50%);
-      font-size: 1.5rem;
+      font-size: 2rem;
       letter-spacing: 0.25em;
       text-shadow: 0 0 60px #fafaa9, 0 0 30px #cece6a, 0 0 6px #949451;
       color: #fafaa9;
@@ -72,8 +72,16 @@ canvas {
   padding: 0.5rem 1rem;
   color: black; }
   #nav-bar #nav-home {
-    color: #645353;
+    color: #473e3e;
     font-size: 1.5rem; }
+  #nav-bar #nav-blog {
+    margin-left: auto;
+    margin-right: 2.5rem;
+    color: white;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem; }
+  #nav-bar #nav-blog.inverse {
+    color: black; }
   #nav-bar #avatar {
     width: 2rem;
     height: 2rem;
@@ -151,6 +159,8 @@ main.container {
         display: flex;
         align-items: center;
         justify-content: space-between; }
+        main.container aside .tags .tag:hover {
+          border: 1px solid #89afc9; }
         main.container aside .tags .tag .count {
           border-radius: 50%;
           padding: 0.1rem;
@@ -179,6 +189,8 @@ main.container {
     main.container article blockquote p {
       white-space: pre-wrap;
       margin: 0; }
+  main.container article p {
+    word-break: break-all; }
   main.container article a {
     color: black; }
   main.container article ul, main.container article ol {
@@ -204,6 +216,14 @@ main.container {
   .table-bordered td, .table-bordered th {
     padding: 0.5rem;
     border: solid 1px; }
+
+.container.notfound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  padding-top: 8rem;
+  flex-grow: 1; }
 
 footer {
   display: flex;
