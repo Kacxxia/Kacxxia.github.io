@@ -15,6 +15,11 @@ html, body {
   height: 100%;
   line-height: 1.7; }
 
+canvas {
+  transition: opacity 0.8s ease-in; }
+  canvas.hide {
+    opacity: 0; }
+
 #home-root {
   overflow: hidden;
   position: absolute;
@@ -32,14 +37,18 @@ html, body {
     right: 0;
     top: 0;
     bottom: 0;
-    color: white; }
+    color: white;
+    z-index: 1;
+    background: transparent; }
     #home-root .container h1 {
       font-size: 4rem;
       padding: 0.5rem 1rem;
       background-color: #48a9c5;
       opacity: 0.9;
-      transform: translate(0, -100%); }
+      transform: translate(0, -100%);
+      transition: none; }
     #home-root .container .hint {
+      transition: opacity 0.2s ease-in;
       position: absolute;
       left: 50%;
       bottom: 15%;
@@ -49,6 +58,8 @@ html, body {
       text-shadow: 0 0 60px #fafaa9, 0 0 30px #cece6a, 0 0 6px #949451;
       color: #fafaa9;
       animation: beat-color linear 1.5s infinite alternate; }
+      #home-root .container .hint.hide {
+        opacity: 0; }
 
 #nav-bar {
   position: absolute;
