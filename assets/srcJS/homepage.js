@@ -20,14 +20,14 @@ function getRandomImg() {
 class Painter {
   constructor(containerElement, imgElement, imgLoader) {
     const canvas = document.createElement("canvas")
+    canvas.classList.add("hide")
     containerElement.appendChild(canvas)
     this.img = imgElement
     this.imgLoader = imgLoader
     this.canvas = canvas
     this.ctx = canvas.getContext("2d")
     this.container = containerElement
-    
-
+    this.build = this.build.bind(this)
   }
 
   setCamera() {
@@ -44,6 +44,7 @@ class Painter {
   build() {
     this.reset()
     this.imgLoader.subscribe(() => {
+      this.canvas.classList.remove('hide')
       this.setViewport()
       this.ctx.drawImage(this.img, this.startX, this.startY, this.vw, this.vh, 0, 0, this.width, this.height)
       this.setCamera()
@@ -96,20 +97,21 @@ class Painter {
 class ResourceLoadManager {
   constructor(ele) {
     this.element = ele
-    this.callback = () => {}
+    this.callbacks = []
     this.event = null
     this.loaded = false
     this.element.addEventListener("load", (ev) => {
+      console.log(this.callbacks)
       this.loaded = true
       this.event = ev
-      this.callback()
+      this.callbacks.forEach(cb => cb(this.event))
     })
   }
 
   subscribe(cb) {
-    this.callback = cb
+    this.callbacks.push(cb)
     if (this.loaded) {
-      cb(this.event)
+      this.callbacks.forEach(cb => cb(this.event))
     }
   }
 }
@@ -225,6 +227,7 @@ class Camera {
 
 
 const body = document.getElementById('home-root')
+const hint = document.getElementById('arcade-hint')
 
 const randomImg = getRandomImg()
 const bkgImg = new Image()
@@ -242,6 +245,7 @@ function navigate(ev) {
   if (ev.type === "keydown") {
     // except for the function key (F1, F2...)
     if (ev.key.length === 2 && ev.key[0] === 'F') return;
+    if (ev.ctrlKey || ev.altKey || ev.shiftKey) return;
   }
   window.removeEventListener("orientationchange", painter.build)
   window.removeEventListener("deviceorientation", deviceOrientationHandler)
@@ -250,8 +254,11 @@ function navigate(ev) {
   window.removeEventListener("keydown", navigate)
   window.location.pathname = "/blog"
 }
+imgLoader.subscribe(() => {
+  hint.classList.remove('hide')
+  document.addEventListener("click", navigate)
+  document.addEventListener("touchstart", navigate)
+  document.addEventListener("keydown", navigate)
+})
 
-document.addEventListener("click", navigate)
-document.addEventListener("touchstart", navigate)
-document.addEventListener("keydown", navigate)
 
