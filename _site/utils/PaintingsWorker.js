@@ -14,6 +14,7 @@
 const path = require("path");
 const fs = require("fs");
 const readline = require("readline");
+const ImageCompressor = require('./ImageCompressor')
 const pkgjson = require("../package.json");
 
 class Progresser {
@@ -172,21 +173,33 @@ class PaintingsWorker {
 
       const { name: fname, ext } = path.parse(inputFilePath);
       const [name, website, artist] = fname.split("-");
+      const extAfterCompress = ImageCompressor.checkType(ext.toLocaleLowerCase().slice(1))
       this.output[`${name}-${website}-${artist}`] = {
         name,
         from: website,
         artist,
-        ext
+        ext: `.${extAfterCompress}`
       }
-      fs.copyFile(inputFilePath, path.resolve(this.outputPath, filename), (err) => {
-        if (err) {
+      ImageCompressor.compress(
+        inputFilePath,
+        `image/${extAfterCompress}`
+      )
+        .then(compressed => {
+          fs.writeFile(path.resolve(this.outputPath, filename), compressed, (err) => {
+            if (err) {
+              this.progresser.failed()
+              reject(err)
+              return;
+            }
+            this.progresser.outputStageResult()
+            resolve()
+          })
+        })
+        .catch(err => {
           this.progresser.failed()
           reject(err)
           return;
-        }
-        this.progresser.outputStageResult()
-        resolve()
-      })
+        })
 
     }).catch(err => { throw err; });
   }
