@@ -183,7 +183,7 @@ class Camera {
         this.betaCount = 0
       }
 
-      if (this.gammaCount >= 48 || this.betaCount >= 48) {
+      if (this.gammaCount >= 54 || this.betaCount >= 54) {
         this.ticking = true
         this.gammaCount = 0
         this.betaCount = 0
@@ -207,8 +207,8 @@ class Camera {
       
       this.painter.paint(newX, newY)
   
-      if ((this.lastX - newX) * (newX - this.painter.startX) <= 0
-       && (this.lastY - newY) * (newY - this.painter.startY) <= 0) {
+      if (((this.lastX - newX) * (newX - this.painter.startX) <= 0
+       && (this.lastY - newY) * (newY - this.painter.startY) <= 0) || (time - this.restoreTime) / 1000 > this.duration) {
          this.restoreTime = null
          this.anchorBeta = this.lastBeta
          this.anchorGamma = this.lastGamma
@@ -240,6 +240,7 @@ painter.build()
 
 
 window.addEventListener("orientationchange", painter.build)
+window.addEventListener("resize", painter.build)
 
 function navigate(ev) {
   if (ev.type === "keydown") {
@@ -249,6 +250,7 @@ function navigate(ev) {
   }
   painter.canvas.classList.add('hide')
   window.removeEventListener("orientationchange", painter.build)
+  window.removeEventListener("resize", painter.build)
   window.removeEventListener("deviceorientation", deviceOrientationHandler)
   window.removeEventListener("click", navigate)
   window.removeEventListener("touchstart", navigate)
