@@ -180,12 +180,15 @@ class PaintingsWorker {
         artist,
         ext: `.${extAfterCompress}`
       }
+
+      // make sure the ext is in lowercase
+      const outputFilename = `${name}-${website}-${artist}.${extAfterCompress}`
       ImageCompressor.compress(
         inputFilePath,
         `image/${extAfterCompress}`
       )
         .then(compressed => {
-          fs.writeFile(path.resolve(this.outputPath, filename), compressed, (err) => {
+          fs.writeFile(path.resolve(this.outputPath, outputFilename), compressed, (err) => {
             if (err) {
               this.progresser.failed()
               reject(err)
