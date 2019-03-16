@@ -243,6 +243,10 @@ main.container {
   }
 
   article {
+    img {
+      max-width: 100%;
+    }
+
     hr {
       border-width: 0;
       margin: 2rem 0;
@@ -335,4 +339,9 @@ footer {
   align-items: center;
   font-size: 1rem;
   color: rgb(151, 151, 151)
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
 }
