@@ -164,6 +164,8 @@ main.container {
           margin-left: 1rem; }
   main.container#post-main {
     margin-top: 6rem; }
+  main.container article img {
+    max-width: 100%; }
   main.container article hr {
     border-width: 0;
     margin: 2rem 0;
@@ -229,3 +231,7 @@ footer {
   align-items: center;
   font-size: 1rem;
   color: #979797; }
+
+.center {
+  display: block;
+  margin: 0 auto; }
