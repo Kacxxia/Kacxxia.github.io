@@ -11,3 +11,7 @@ tags:
 ### Lecture 1-3: Introduction, Proof, Induction
 
 ![](/assets/img/MIT/MIT-6.042J-1-3.png)
+
+### Lecture 4-5: Number Theory
+
+![](/assets/img/MIT/MIT-6.042J-4.png)
