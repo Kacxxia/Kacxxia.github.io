@@ -12,7 +12,8 @@
     "dev:jekyll": "jekyll build --watch",
     "build": "run-s build:*",
     "build:webpack": "webpack --config ./webpack.config.prod.js",
-    "build:jekyll": "jekyll build"
+    "build:jekyll": "jekyll build",
+    "addBkgImgs": "node utils/PaintingsWorker.js"
   },
   "repository": {
     "type": "git",
