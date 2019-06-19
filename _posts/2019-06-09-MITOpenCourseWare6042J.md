@@ -12,6 +12,11 @@ tags:
 
 ![](/assets/img/MIT/MIT-6.042J-1-3.png)
 
-### Lecture 4-5: Number Theory
+### Lecture 4: Number Theory I
 
 ![](/assets/img/MIT/MIT-6.042J-4.png)
+
+
+### Lecture 5: Number Theory II
+
+![](/assets/img/MIT/MIT-6.042J-5.png)
