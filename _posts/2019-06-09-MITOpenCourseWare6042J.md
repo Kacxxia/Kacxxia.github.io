@@ -20,3 +20,6 @@ tags:
 ### Lecture 5: Number Theory II
 
 ![](/assets/img/MIT/MIT-6.042J-5.png)
+
+### Lecture 6: Graph Theory and Coloring
+![](/assets/img/MIT/MIT-6.042J-6.png)
