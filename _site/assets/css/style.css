@@ -20,6 +20,9 @@ canvas {
   canvas.hide {
     opacity: 0; }
 
+* {
+  word-break: break-all; }
+
 #home-root {
   overflow: hidden;
   position: absolute;
@@ -100,9 +103,7 @@ header .container {
 
 @media (min-width: 768px) {
   main.container {
-    max-width: 768px; }
-    main.container aside {
-      margin-left: 6rem; } }
+    max-width: 768px; } }
 main.container {
   margin: 2rem auto 0;
   padding: 0 1rem; }
@@ -111,8 +112,9 @@ main.container {
     flex-wrap: wrap-reverse;
     max-width: 992px; }
   main.container section {
-    width: 600px;
-    flex-grow: 2; }
+    flex-basis: 70%;
+    flex-grow: 4;
+    min-width: 0; }
     main.container section ul {
       list-style: none;
       padding: 0; }
@@ -142,8 +144,14 @@ main.container {
         display: block;
         color: silver; }
   main.container aside {
-    width: 200px;
-    flex-grow: 1; }
+    flex-basis: 20%;
+    flex-grow: 1;
+    min-width: 0;
+    margin-left: 2rem; }
+    @media (max-width: 768px) {
+      main.container aside {
+        flex-basis: 40%;
+        margin-left: 0; } }
     main.container aside .tags {
       display: flex;
       flex-wrap: wrap; }
