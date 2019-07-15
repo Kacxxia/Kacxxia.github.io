@@ -33,6 +33,9 @@ canvas {
     opacity: 0;
   }
 }
+* {
+  word-break: break-all;
+}
 
 #home-root {
   overflow: hidden;
@@ -142,9 +145,6 @@ header {
   main.container {
     max-width: 768px;
 
-    aside {
-      margin-left: 6rem;
-    }
   }
 }
 
@@ -159,9 +159,9 @@ main.container {
   }
   
   section {
-    width: 600px;
-    flex-grow: 2;
-
+    flex-basis: 70%;
+    flex-grow: 4;
+    min-width: 0;
     ul {
       list-style: none;
       padding: 0;
@@ -209,8 +209,14 @@ main.container {
   }
 
   aside {
-    width: 200px;
+    flex-basis: 20%;
+    @media (max-width: 768px) {
+      flex-basis: 40%;
+      margin-left: 0;
+    }
     flex-grow: 1;
+    min-width: 0;
+    margin-left: 2rem;
 
     .tags {
       display: flex;
