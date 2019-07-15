@@ -23,3 +23,6 @@ tags:
 
 ### Lecture 6: Graph Theory and Coloring
 ![](/assets/img/MIT/MIT-6.042J-6.png)
+
+### Lecture 7: Matching Problem
+![](/assets/img/MIT/MIT-6.042J-7.png)
