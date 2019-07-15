@@ -1,1 +1,2 @@
-# My WTF Blog
+# My Blog
+[https://kacxxia.wtf](https://kacxxia.wtf)
