@@ -4,7 +4,6 @@
 // 3. render buttons in Complementary Color
 
 import PaintingManifest from '../img/Paintings/manifest.json'
-import Throttle from 'lodash/throttle'
 import { CubicBezier } from './utils'
 
 function getRandomImg() {
@@ -15,6 +14,123 @@ function getRandomImg() {
   return {
     url: `assets/img/Paintings/${name}${img.ext}`
   }
+}
+
+function customThrottleWithFilterMoves(func, wait) {
+  const betaCounter = {
+    origin: [],
+    towards: [],
+    backwards: [],
+    history: []
+  }
+  const gammaCounter = {
+    origin: [],
+    towards: [],
+    backwards: [],
+    history: []
+  }
+  const betamap = []
+  const gammamap = []
+  let count = 0
+  let lastInvokeTime, lastArgs, lastThis, baseBeta, baseGamma, timer
+
+  function calcAverage(arr) {
+    if (arr.length === 0) return 0;
+    return arr.reduce((total, current) => total + current, 0) / arr.length
+  }
+
+  function calcStandardDeviation(arr, avg) {
+    if (arr.length === 0) return 0;
+    return Math.sqrt(arr.reduce((total, current) => total + Math.pow(current - avg, 2), 0) / arr.length)
+  }
+  function shouldInvoke(time) {
+    return lastInvokeTime === undefined || time - lastInvokeTime >= wait
+  }
+  function invokeFunc(time) {
+    lastInvokeTime = time
+    let betas = [].concat(betaCounter.history, betaCounter.origin)
+    let gammas = [].concat(gammaCounter.history, gammaCounter.origin)
+    let betaAverage = calcAverage(betas)
+    let gammaAverage = calcAverage(gammas)
+
+    betaCounter.history = betas.slice()
+    gammaCounter.history = gammas.slice()
+
+    if (betas.length >= 10 || gammas.length >= 10) {
+      const betaStandardDeviation = calcStandardDeviation(betas, betaAverage) 
+      const gammaStandardDeviation = calcStandardDeviation(gammas, gammaAverage)
+      const p = Math.abs(betaStandardDeviation)
+      const v = Math.abs(gammaStandardDeviation)
+      const isQuivering = betaStandardDeviation < 0.2 && gammaStandardDeviation < 0.2
+
+      betamap[count] = p
+      gammamap[count++] = v
+
+      if (isQuivering) {
+        gammaCounter.origin = []
+        gammaCounter.towards = []
+        gammaCounter.backwards = []
+        betaCounter.origin = []
+        betaCounter.towards = []
+        betaCounter.backwards = []
+        return;
+      }
+    }
+
+    betas = betaCounter.towards.length >= betaCounter.backwards.length 
+    ? betaCounter.towards 
+    : betaCounter.backwards
+    gammas = gammaCounter.towards.length >= gammaCounter.backwards.length 
+    ? gammaCounter.towards 
+    : gammaCounter.backwards
+    betaAverage = calcAverage(betas)
+    gammaAverage = calcAverage(gammas)
+    lastArgs[0] = Object.assign({}, lastArgs[0], { beta: betaAverage, gamma: gammaAverage})
+
+    gammaCounter.origin = []
+    gammaCounter.towards = []
+    gammaCounter.backwards = []
+    betaCounter.origin = []
+    betaCounter.towards = []
+    betaCounter.backwards = []
+    if (betaCounter.history.length >= 20 || gammaCounter.history.length >= 20) {
+      betaCounter.history = betaCounter.history.slice(-20)
+      gammaCounter.history = gammaCounter.history.slice(-20)
+    }
+    
+
+    return func.apply(lastThis, lastArgs)
+  }
+
+  function _throttle() {
+    const time = new Date().getTime()
+    lastArgs = arguments
+    lastThis = this
+
+    const currentBeta = arguments[0].beta
+    const currentGamma = arguments[0].gamma
+
+    betaCounter.origin.push(currentBeta)
+    gammaCounter.origin.push(currentGamma)
+    if (baseBeta === undefined) {
+      betaCounter.towards.push(currentBeta)
+      gammaCounter.towards.push(currentGamma)
+      baseBeta = currentBeta
+      baseGamma = currentGamma
+      return;
+    }
+
+    const betaDir = currentBeta >= baseBeta ? betaCounter.towards : betaCounter.backwards
+    const gammaDir = currentGamma >= baseGamma ? gammaCounter.towards : gammaCounter.backwards
+    betaDir.push(currentBeta)
+    gammaDir.push(currentGamma)
+
+    if (shouldInvoke(time)) {
+      invokeFunc(time)
+    }
+  }
+
+  return _throttle
 }
 
 class Painter {
@@ -157,7 +273,6 @@ class Camera {
   
       let newX = this.painter.startX - tanDegree(gamma - this.anchorGamma) * this.step
       let newY = this.painter.startY - tanDegree(beta - this.anchorBeta) * this.step
-      if (Math.abs(newX - this.lastX) < 3 && Math.abs(newY - this.lastY) < 3) return;
 
       if (newX < 0) newX = 0;
       if (newX + this.painter.vw > this.painter.img.width) newX = this.painter.img.width - this.painter.vw;
@@ -191,7 +306,7 @@ class Camera {
         window.requestAnimationFrame((time) => this.restore(time))
       }
     } catch(err) {
-      alert(err)
+
     }
   }
 
@@ -235,7 +350,7 @@ bkgImg.src = randomImg.url
 const imgLoader = new ResourceLoadManager(bkgImg)
 
 const painter = new Painter(body, bkgImg, imgLoader)
-const deviceOrientationHandler = Throttle(function (e) { this.camera.rotate(e.beta, e.gamma) }.bind(painter), 1000 / 60)
+const deviceOrientationHandler = customThrottleWithFilterMoves(function (e) { this.camera.rotate(e.beta / 6, e.gamma / 6) }.bind(painter), 12)
 painter.build()
 
 
