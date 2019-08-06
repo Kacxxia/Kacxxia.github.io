@@ -26,6 +26,12 @@ module.exports = {
     publicPath: "/assets/js",
     watchContentBase: true,
     open: true,
-    port: 4000
+    port: 4000,
+    before: app => {
+      app.get('*', (req, res, next) => {
+        res.set("Cache-Control", "max-age=600")
+        next()
+      })
+    }
   }
 }
