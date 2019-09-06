@@ -2,6 +2,8 @@
 layout: post
 title: 英语中的俗语
 subtitle: Richel's English 俗语系列
+description: "Author: Kacxxia; Abstract: 学习英语俗语"
+keywords: "Kacxxia, Web, 英语, Rachel's English, 俗语"
 tags:
   - 英语
   - 学习笔记
