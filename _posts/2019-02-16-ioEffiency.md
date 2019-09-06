@@ -2,6 +2,8 @@
 layout: post
 title: 测试Node串行I/O和并行I/O的效率
 subtitle: 有线程池并行I/O效率就高吗？
+description: "Author: Kacxxia; Abstract: Node并行IO与串行IO测试"
+keywords: "Kacxxia, Web, Node.js, 串行I/O, 并行I/O"
 tags:
   - Node.js
   - I/O

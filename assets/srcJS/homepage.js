@@ -370,7 +370,7 @@ function navigate(ev) {
   window.removeEventListener("click", navigate)
   window.removeEventListener("touchstart", navigate)
   window.removeEventListener("keydown", navigate)
-  window.location.pathname = "/blog"
+  window.location.pathname = "/blog/"
 }
 imgLoader.subscribe(() => {
   hint.textContent = "Press any button"

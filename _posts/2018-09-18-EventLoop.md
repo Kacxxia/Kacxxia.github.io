@@ -2,6 +2,8 @@
 layout: post
 title: Event Loop
 subtitle: Node.js的异步机制
+description: "Author: Kacxxia; Abstract: Node.js异步"
+keywords: "Kacxxia, Web, Event Loop, 事件循环, Node.js, 异步, async, 原理,  How it works,"
 tags:
   - Event Loop
   - Node.js

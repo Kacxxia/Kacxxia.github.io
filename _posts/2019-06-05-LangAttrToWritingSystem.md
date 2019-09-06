@@ -2,6 +2,8 @@
 layout: post
 title: 【记忆导图】从lang属性到书写系统
 subtitle: 学习HTML5.2 spec
+description: "Author: Kacxxia; Abstract: 从HTML的lang属性到书写系统"
+keywords: "Kacxxia, Web, HTML, 书写系统, HTML5.2规范, spec"
 tags:
   - 记忆导图
   - UML

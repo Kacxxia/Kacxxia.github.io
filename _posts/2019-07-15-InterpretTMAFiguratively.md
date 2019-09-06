@@ -2,6 +2,8 @@
 layout: post
 title: 记一次有趣的Gale–Shapley算法代码形象化
 subtitle: 算法的代码实现即使稍有区别形象化之后也会有很大区别
+description: "Author: Kacxxia; Abstract: Stable Marriage Problem 与 Gale-Shapley 算法"
+keywords: "Kacxxia, Web, 理论, theory, 数学, Math, Stable Marriage Problem, 稳定婚姻问题, Gale-Shapley, 算法, Algorithm, 代码风格, Coding"
 tags:
   - Coding
 ---
