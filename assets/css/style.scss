@@ -33,9 +33,6 @@ canvas {
     opacity: 0;
   }
 }
-* {
-  word-break: break-all;
-}
 
 #home-root {
   overflow: hidden;
@@ -226,6 +223,7 @@ main.container {
         &:hover {
           border: 1px solid rgb(137, 175, 201);
         }
+        word-break: break-all;
         margin-top: 0.25rem;
         margin-left: 0.25rem;
         padding: 0.25rem;
@@ -235,6 +233,9 @@ main.container {
         align-items: center;
         justify-content: space-between;
 
+        * {
+          word-break: break-all;
+        }
         .count {
           border-radius: 50%;
           padding: 0.1rem;
@@ -281,9 +282,6 @@ main.container {
         margin: 0;
       }
     }
-    p {
-      word-break: break-all;
-    }
 
     a {
       color: black;
@@ -307,6 +305,8 @@ main.container {
     }
 
     code.highlighter-rouge {
+      word-break: keep-all;
+      white-space: nowrap;
       margin: 0 0.25rem;
       padding: 0.25rem 0.5rem;
       font-size: 90%;
@@ -350,4 +350,21 @@ footer {
 .center {
   display: block;
   margin: 0 auto;
+}
+
+.my-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.width80p {
+  width: 70%;
+}
+
+.img-caption {
+  margin-top: -1rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
 }

@@ -20,9 +20,6 @@ canvas {
   canvas.hide {
     opacity: 0; }
 
-* {
-  word-break: break-all; }
-
 #home-root {
   overflow: hidden;
   position: absolute;
@@ -156,6 +153,7 @@ main.container {
       display: flex;
       flex-wrap: wrap; }
       main.container aside .tags .tag {
+        word-break: break-all;
         margin-top: 0.25rem;
         margin-left: 0.25rem;
         padding: 0.25rem;
@@ -166,6 +164,8 @@ main.container {
         justify-content: space-between; }
         main.container aside .tags .tag:hover {
           border: 1px solid #89afc9; }
+        main.container aside .tags .tag * {
+          word-break: break-all; }
         main.container aside .tags .tag .count {
           border-radius: 50%;
           padding: 0.1rem;
@@ -196,8 +196,6 @@ main.container {
     main.container article blockquote p {
       white-space: pre-wrap;
       margin: 0; }
-  main.container article p {
-    word-break: break-all; }
   main.container article a {
     color: black; }
   main.container article ul, main.container article ol {
@@ -210,6 +208,8 @@ main.container {
     padding: 1rem;
     white-space: pre-wrap; }
   main.container article code.highlighter-rouge {
+    word-break: keep-all;
+    white-space: nowrap;
     margin: 0 0.25rem;
     padding: 0.25rem 0.5rem;
     font-size: 90%;
@@ -243,3 +243,17 @@ footer {
 .center {
   display: block;
   margin: 0 auto; }
+
+.my-1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
+
+.width80p {
+  width: 70%; }
+
+.img-caption {
+  margin-top: -1rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold; }
