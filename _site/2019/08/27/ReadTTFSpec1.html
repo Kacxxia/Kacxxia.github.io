@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="description" content="Author: Kacxxia; Abstract: How TTF Works">
-<meta name="keywords" content="Kacxxia, Web, TTF, TrueType, 字体, Font, 原理, How it works">
+<meta name="keywords" content="Kacxxia, Web, TTF, TrueType, 字体, Font, 原理, How it works, ttc, Truetype Collection, cmap, format 4">
 <link rel="stylesheet" href="/assets/css/normalize.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
@@ -49,7 +49,7 @@ Stroke是先通过几个点来确定字形的基本骨架，类似于用2px的�
 <ul>
   <li>name。记录人类易读的信息，例如字体名、样式名。</li>
   <li>head。记录字体的总体信息，例如版本、书写方向、创建和修改日期等。</li>
-  <li>cmap。记录字符编码与字形索引的映射。因为不同操作系统的默认编码可能不同，因此cmap可能包括多个子表，为每个要支持的编码方案记录映射。</li>
+  <li>cmap。记录字符编码与字形索引的映射方式。因为不同操作系统的默认编码可能不同，因此cmap可能包括多个子表，为每个要支持的编码方案记录映射。</li>
   <li>loca。映射字形索引和字形在glyf表中的实际位置</li>
   <li>glyf。记录字形信息以及对字形进行细化的一系列指令。</li>
   <li>hhea。对水平排版的字体的总体layout。</li>
@@ -57,6 +57,14 @@ Stroke是先通过几个点来确定字形的基本骨架，类似于用2px的�
   <li>maxp。记录字体所需的内存信息，如字形数量、组合字形数量。</li>
   <li>post。记录TrueType在PostScript打印机上正常运作所需的信息。</li>
 </ul>
+
+<h4 id="eg-cmap及其格式">eg. cmap及其格式</h4>
+<p>cmap存储的是将字符编码映射到字形索引的方法，这样定义严格来说也不正确，其实cmap有很多种格式。<br />
+Truetype刚出来的那个时代ASCII是主流，基本上都在用format 0，在cmap里直接存储一个256长的数组，记录某个字符编码具体对应什么字形索引。<br />
+但在现在，不仅要考虑兼容各种字符集，还要尽可能减小文件的体积，所以相比于存储“结果”，存储“方法”更加符合普遍需求。<br />
+cmap从古到今共有format 0, format 2, format 4, format 6, format 8.0, format 10.0, format 12.0, format 13.0, format 14.0。这些format的一种或多种已经弃用很久了，当代使用最为广泛的是format 4, 6和12。<br />
+format 4记录着将分散的双字节编码字符映射到字形索引所需要的信息。分散是指，虽然字体文件里的字形的索引是连续的，但字符却不一定，比如Unicode中的拉丁字母和CJK字符完全坐落在不同的区域。format 4本身相当于将几段不连续的区域映射到一段连续的区域。<br />
+相比于format 4, format 6映射连续紧凑的双字节编码字符，format 12则在分段的记录表示上有些区别。</p>
 
 <h3 id="font-engine">Font Engine</h3>
 <p>将TrueType字体中的信息转变成栅格化的图像需要三步：Scale, Grid-fit, Rasterlize。</p>
@@ -70,7 +78,8 @@ Scale的工作是将与在与输出设备无关环境下作成的字形master ou
 <h4 id="grid-fit">Grid-fit</h4>
 <p>虽然我们已经有了字形轮廓，但不能直接把它们转化成栅格化图像，因为有个很重要的问题：拿简单例子来说，一个矩形的轮廓落在两列像素的中间，应该是点亮左列、右列、还是两列都点亮？<br />
 这个疑问可能会造成位置不同的同一个圆形轮廓点亮的像素不一致、H字符的两条竖杠不同宽、衬线显示异常等多种实际问题。<br />
-<img src="/assets/img/TrueType/BeforeGridFit.png" alt="before GridFit" class="center" style="width: 200px;" title="before GridFit" />
+<img src="/assets/img/TrueType/BeforeGridFit.png" alt="before GridFit" class="center" style="width: 200px;" title="before GridFit" /><br />
+<span class="center img-caption">未进行grid-fit前的潜在问题</span>
 为了解决这些，我们需要在尽可能保留字体的本身特性的条件下根据输出设备的分辨率微调字形轮廓的位置。在了解诸如Cap height, x-height, 杠宽, 衬线, 步进宽等关键特性的基础上，参考原有的字形轮廓依据一系列指令重新一步步绘制点至新的轮廓，这一系列操作也叫做hinting。</p>
 
 <h4 id="rasterize">Rasterize</h4>
@@ -80,7 +89,14 @@ Scale的工作是将与在与输出设备无关环境下作成的字形master ou
 <h3 id="高级样式">高级样式</h3>
 <p>如果文件里面只包含了必须的表，或者另只包含了与layout无关的表，那这就是一个简单字体，只包含最基础的形状。复杂的字体则包含笔画的连接、装饰记号、复杂的连字等等。</p>
 
-<p><img src="/assets/img/TrueType/Zapfino.png" alt="Complex Font" class="center" style="width: 200px;" title="Complex Font" /></p>
+<p><img src="/assets/img/TrueType/Zapfino.png" alt="Complex Font" class="center my-1" style="width: 200px;" title="Complex Font" /><br />
+<span class="center img-caption">高级字体</span></p>
+
+<h3 id="truetype-collection">TrueType Collection</h3>
+<p>通常一个Font family下会包含各种style的font，像是Regular, Light, Normal，它们的大部分表其实都是一致的，每个style都存储单独的字体文件未免太浪费空间。.ttc(TrueType collection/OpenType collection)文件就是同一个family下不同font的集合，它最大的好处就是多个字体可以共用一张表。在生成ttc时，会根据表的checksum、长度、实际数据进行判断，如果一致则表示表相同，最后生成一个结构类似<code class="highlighter-rouge">{ttc版本} {字体文件数量} {各字体的目录结构} {表}</code>的文件。</p>
+
+<p><img src="/assets/img/TrueType/ttc.png" alt="collection vs single file" class="center" style="width: 400px;" title="font collection vs single file" /><br />
+<span class="center img-caption">ttc文件与其包含的各字体文件对比</span></p>
 
 <h3 id="参考与引申">参考与引申</h3>
 <p><a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/">TrueType Reference Manual</a><br />
@@ -88,7 +104,8 @@ Scale的工作是将与在与输出设备无关环境下作成的字形master ou
 <a href="https://www.wikiwand.com/en/TrueType">TrueType - Wikipedia</a><br />
 <a href="https://www.wikiwand.com/en/PostScript_fonts">PostScript Fonts - Wikipedia</a><br />
 <a href="https://www.smashingmagazine.com/2012/04/a-closer-look-at-font-rendering/">A Closer Look At Font Rendering</a><br />
-<a href="https://blog.typekit.com/2010/10/05/type-rendering-on-the-web/">Type rendering on the web</a></p>
+<a href="https://blog.typekit.com/2010/10/05/type-rendering-on-the-web/">Type rendering on the web</a><br />
+<a href="https://github.com/adobe-type-tools/afdko/blob/develop/python/afdko/otf2otc.py">otf2otc.py</a></p>
 
   </article>
 </main>
