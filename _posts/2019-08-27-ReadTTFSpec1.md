@@ -3,7 +3,7 @@ layout: post
 title: 走近TrueType
 subtitle: 探究TrueType的内部及相关
 description: "Author: Kacxxia; Abstract: How TTF Works"
-keywords: "Kacxxia, Web, TTF, TrueType, 字体, Font, 原理, How it works"
+keywords: "Kacxxia, Web, TTF, TrueType, 字体, Font, 原理, How it works, ttc, Truetype Collection, cmap, format 4"
 tags:
   - 字体
   - TrueType
@@ -36,13 +36,21 @@ Stroke是先通过几个点来确定字形的基本骨架，类似于用2px的�
 为了TrueType能够正常运作，ttf的各种表，有一些是必须具备的，有一些则是可选的。必须具备的表包括'cmap', 'glyf', 'head', 'hhea', 'hmtx', 'loca', 'maxp', 'name', 'post'。  
 * name。记录人类易读的信息，例如字体名、样式名。
 * head。记录字体的总体信息，例如版本、书写方向、创建和修改日期等。
-* cmap。记录字符编码与字形索引的映射。因为不同操作系统的默认编码可能不同，因此cmap可能包括多个子表，为每个要支持的编码方案记录映射。
+* cmap。记录字符编码与字形索引的映射方式。因为不同操作系统的默认编码可能不同，因此cmap可能包括多个子表，为每个要支持的编码方案记录映射。
 * loca。映射字形索引和字形在glyf表中的实际位置
 * glyf。记录字形信息以及对字形进行细化的一系列指令。
 * hhea。对水平排版的字体的总体layout。
 * hmtx。对水平排版的字形的layout。
 * maxp。记录字体所需的内存信息，如字形数量、组合字形数量。
 * post。记录TrueType在PostScript打印机上正常运作所需的信息。  
+
+#### eg. cmap及其格式
+cmap存储的是将字符编码映射到字形索引的方法，这样定义严格来说也不正确，其实cmap有很多种格式。  
+Truetype刚出来的那个时代ASCII是主流，基本上都在用format 0，在cmap里直接存储一个256长的数组，记录某个字符编码具体对应什么字形索引。  
+但在现在，不仅要考虑兼容各种字符集，还要尽可能减小文件的体积，所以相比于存储“结果”，存储“方法”更加符合普遍需求。  
+cmap从古到今共有format 0, format 2, format 4, format 6, format 8.0, format 10.0, format 12.0, format 13.0, format 14.0。这些format的一种或多种已经弃用很久了，当代使用最为广泛的是format 4, 6和12。  
+format 4记录着将分散的双字节编码字符映射到字形索引所需要的信息。分散是指，虽然字体文件里的字形的索引是连续的，但字符却不一定，比如Unicode中的拉丁字母和CJK字符完全坐落在不同的区域。format 4本身相当于将几段不连续的区域映射到一段连续的区域。  
+相比于format 4, format 6映射连续紧凑的双字节编码字符，format 12则在分段的记录表示上有些区别。  
 
 ### Font Engine
 将TrueType字体中的信息转变成栅格化的图像需要三步：Scale, Grid-fit, Rasterlize。
@@ -56,7 +64,8 @@ Scale的另一项工作就是在原有的轮廓下多加上两个点，起始点
 #### Grid-fit
 虽然我们已经有了字形轮廓，但不能直接把它们转化成栅格化图像，因为有个很重要的问题：拿简单例子来说，一个矩形的轮廓落在两列像素的中间，应该是点亮左列、右列、还是两列都点亮？  
 这个疑问可能会造成位置不同的同一个圆形轮廓点亮的像素不一致、H字符的两条竖杠不同宽、衬线显示异常等多种实际问题。  
-![before GridFit](/assets/img/TrueType/BeforeGridFit.png){:  .center style="width: 200px;" title="before GridFit"}
+![before GridFit](/assets/img/TrueType/BeforeGridFit.png){:  .center style="width: 200px;" title="before GridFit"}  
+<span>未进行grid-fit前的潜在问题</span>{: .center.img-caption}
 为了解决这些，我们需要在尽可能保留字体的本身特性的条件下根据输出设备的分辨率微调字形轮廓的位置。在了解诸如Cap height, x-height, 杠宽, 衬线, 步进宽等关键特性的基础上，参考原有的字形轮廓依据一系列指令重新一步步绘制点至新的轮廓，这一系列操作也叫做hinting。
 
 #### Rasterize
@@ -66,7 +75,14 @@ Scale的另一项工作就是在原有的轮廓下多加上两个点，起始点
 ### 高级样式
 如果文件里面只包含了必须的表，或者另只包含了与layout无关的表，那这就是一个简单字体，只包含最基础的形状。复杂的字体则包含笔画的连接、装饰记号、复杂的连字等等。
 
-![Complex Font](/assets/img/TrueType/Zapfino.png){: .center style="width: 200px;" title="Complex Font"}
+![Complex Font](/assets/img/TrueType/Zapfino.png){: .center.my-1 style="width: 200px;" title="Complex Font"}  
+<span>高级字体</span>{: .center.img-caption}
+
+### TrueType Collection
+通常一个Font family下会包含各种style的font，像是Regular, Light, Normal，它们的大部分表其实都是一致的，每个style都存储单独的字体文件未免太浪费空间。.ttc(TrueType collection/OpenType collection)文件就是同一个family下不同font的集合，它最大的好处就是多个字体可以共用一张表。在生成ttc时，会根据表的checksum、长度、实际数据进行判断，如果一致则表示表相同，最后生成一个结构类似`{ttc版本} {字体文件数量} {各字体的目录结构} {表}`的文件。  
+
+![collection vs single file](/assets/img/TrueType/ttc.png){: .center style="width: 400px;" title="font collection vs single file"}  
+<span>ttc文件与其包含的各字体文件对比</span>{: .center.img-caption}
 
 ### 参考与引申
 [TrueType Reference Manual](https://developer.apple.com/fonts/TrueType-Reference-Manual/)  
@@ -75,3 +91,4 @@ Scale的另一项工作就是在原有的轮廓下多加上两个点，起始点
 [PostScript Fonts - Wikipedia](https://www.wikiwand.com/en/PostScript_fonts)  
 [A Closer Look At Font Rendering](https://www.smashingmagazine.com/2012/04/a-closer-look-at-font-rendering/)  
 [Type rendering on the web](https://blog.typekit.com/2010/10/05/type-rendering-on-the-web/)  
+[otf2otc.py](https://github.com/adobe-type-tools/afdko/blob/develop/python/afdko/otf2otc.py)
